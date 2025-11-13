@@ -1,0 +1,18 @@
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+try:
+    load_dotenv()
+except Exception:
+    pass
+
+BASE_DIR = Path(__file__).resolve().parent
+DEFAULT_DB = f"sqlite:///{BASE_DIR / 'database.db'}"
+
+class Config:
+    SECRET_KEY = os.getenv('SECRET_KEY', 'payment-dev-key')
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', DEFAULT_DB)
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    PORT = int(os.getenv('PORT', 5004))
+    SERVICE_NAME = os.getenv('SERVICE_NAME', 'payment-service')
+    SERVICE_URL = os.getenv('SERVICE_URL', f"http://127.0.0.1:{PORT}/payments")

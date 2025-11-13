@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block title %}Profil Pengguna - Food Delivery{% endblock %}
+
+{% block content %}
+  <h2><i class="fas fa-user-circle"></i> Profil Saya</h2>
+  
+  <div class="user-card">
+    <div style="background: linear-gradient(135deg, #fa6f3d 0%, #f05a24 100%); padding: 2rem 1rem; text-align: center; border-radius: 8px 8px 0 0; color: white;">
+      <i class="fas fa-user-circle" style="font-size: 4rem;"></i>
+    </div>
+    
+    <div style="padding: 2rem; border: 1px solid #f0f0f0; border-radius: 0 0 8px 8px;">
+      <div style="margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #f0f0f0;">
+        <p style="margin: 0; color: #595959; font-size: 0.9rem;">
+          <i class="fas fa-user"></i> Nama Lengkap
+        </p>
+        <p style="margin: 0.3rem 0 0; font-size: 1.1rem; font-weight: 600;">
+          {{ user.name if user is defined else 'Guest User' }}
+        </p>
+      </div>
+
+      <div style="margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #f0f0f0;">
+        <p style="margin: 0; color: #595959; font-size: 0.9rem;">
+          <i class="fas fa-envelope"></i> Email
+        </p>
+        <p style="margin: 0.3rem 0 0; font-size: 1.1rem; font-weight: 600;">
+          {{ user.email if user is defined else 'guest@example.com' }}
+        </p>
+      </div>
+
+      <div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #f0f0f0;">
+        <p style="margin: 0; color: #595959; font-size: 0.9rem;">
+          <i class="fas fa-phone"></i> Nomor Telepon
+        </p>
+        <p style="margin: 0.3rem 0 0; font-size: 1.1rem; font-weight: 600;">
+          {{ user.phone if user is defined else '(Belum diisi)' }}
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 1rem;">
+        <a class="btn" href="/user/edit" style="flex: 1; text-align: center; background: #fa6f3d; border-color: #fa6f3d; color: white; text-decoration: none;">
+          <i class="fas fa-edit"></i> Edit Profil
+        </a>
+        <a class="btn primary" href="/" style="flex: 1; text-align: center;">
+          <i class="fas fa-home"></i> Beranda
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top: 2rem;">
+    <h3 style="color: #fa6f3d; margin-bottom: 1rem;">
+      <i class="fas fa-history"></i> Riwayat Pesanan Terbaru
+    </h3>
+    <div id="order-history">
+      <p style="color: #595959; text-align: center; padding: 1rem;">
+        <i class="fas fa-inbox" style="display: block; font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+        Belum ada pesanan
+      </p>
+    </div>
+  </div>
+  <script>
+    (function(){
+      try{
+        var root = document.getElementById('order-history');
+        if(!root) return;
+
+        function render(h){
+          var date = new Date(h.ts || h.created_at || Date.now());
+          var items = h.items || [];
+          var subtotal = h.subtotal != null ? h.subtotal : (h.total_price || 0);
+          var deliveryFee = h.deliveryFee != null ? h.deliveryFee : 10000;
+          var discount = h.discount != null ? h.discount : (subtotal >= 50000 ? Math.floor(subtotal*0.1) : 0);
+          var total = h.total != null ? h.total : (subtotal + deliveryFee - discount);
+          var method = h.method || 'cod';
+          var itemsHtml = '<ul style="margin:0.5rem 0 0; padding-left:1.2rem;">' +
+            items.map(function(i){ var nm=(i.name||('Item '+(i.id||''))).toString(); return '<li>'+nm+' x'+(i.qty||1)+'</li>'; }).join('') +
+            '</ul>';
+          var html = ''+
+            '<div style="padding:1rem;">'+
+            '<div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;"><span>Waktu</span><strong>'+date.toLocaleString('id-ID')+'</strong></div>'+
+            '<div style="margin-bottom:0.5rem;"><span style="display:inline-block; min-width:120px;">Item</span>'+itemsHtml+'</div>'+
+            '<div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;"><span>Subtotal</span><strong>Rp '+Number(subtotal).toLocaleString('id-ID')+'</strong></div>'+
+            '<div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;"><span>Biaya Pengiriman</span><strong>Rp '+Number(deliveryFee).toLocaleString('id-ID')+'</strong></div>'+
+            '<div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;"><span>Diskon</span><strong style="color:#52c41a">- Rp '+Number(discount).toLocaleString('id-ID')+'</strong></div>'+
+            '<div style="display:flex; justify-content:space-between; font-weight:700; font-size:1.1rem; margin-top:0.5rem;"><span>Total</span><span style="color:#fa6f3d">Rp '+Number(total).toLocaleString('id-ID')+'</span></div>'+
+            '<div style="margin-top:0.8rem; color:#595959;">Metode: <strong>'+String(method).toUpperCase()+'</strong></div>'+
+            '</div>';
+          root.innerHTML = html;
+        }
+
+        fetch('http://127.0.0.1:5003/orders')
+          .then(function(r){ return r.ok ? r.json() : []; })
+          .then(function(arr){
+            if(Array.isArray(arr) && arr.length){
+              arr.sort(function(a,b){ return new Date(b.created_at||0) - new Date(a.created_at||0) || (b.id||0)-(a.id||0); });
+              render(arr[0]);
+            } else {
+              var history = JSON.parse(localStorage.getItem('fd_order_history')||'[]');
+              if(history.length) render(history[0]);
+            }
+          })
+          .catch(function(){
+            var history = JSON.parse(localStorage.getItem('fd_order_history')||'[]');
+            if(history.length) render(history[0]);
+          });
+      }catch(e){}
+    })();
+  </script>
+{% endblock %}

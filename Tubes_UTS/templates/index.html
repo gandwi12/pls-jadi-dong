@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Beranda - Food Delivery{% endblock %}
+
+{% block content %}
+  <section class="hero">
+    <h1><i class="fas fa-fire" style="color: #fa6f3d;"></i> Pesan Makanan Lezat, Antar Cepat!</h1>
+    <p>Nikmati berbagai pilihan menu dari restoran favorit dengan pengiriman yang terpercaya</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="/menu">
+        <i class="fas fa-list"></i> Lihat Menu
+      </a>
+      <a class="btn" href="/restoran">
+        <i class="fas fa-store"></i> Temukan Restoran
+      </a>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="card">
+      <i class="fas fa-bolt" style="font-size: 2rem; color: #fa6f3d; margin-bottom: 1rem;"></i>
+      <h3>Pengiriman Cepat</h3>
+      <p>Pesanan sampai dalam 30-45 menit dengan status tracking real-time</p>
+    </div>
+    <div class="card">
+      <i class="fas fa-leaf" style="font-size: 2rem; color: #52c41a; margin-bottom: 1rem;"></i>
+      <h3>Makanan Segar</h3>
+      <p>Ribuan menu pilihan dari restoran terbaik dan terpercaya</p>
+    </div>
+    <div class="card">
+      <i class="fas fa-shield-alt" style="font-size: 2rem; color: #faad14; margin-bottom: 1rem;"></i>
+      <h3>Pembayaran Aman</h3>
+      <p>Berbagai metode pembayaran dengan jaminan keamanan transaksi</p>
+    </div>
+  </section>
+{% endblock %}

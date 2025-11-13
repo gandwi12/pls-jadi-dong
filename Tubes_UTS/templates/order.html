@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Pesanan - Food Delivery{% endblock %}
+
+{% block content %}
+  <h2><i class="fas fa-shopping-cart"></i> Keranjang Pesanan</h2>
+  
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+    <!-- Cart Items -->
+    <div>
+      <h3 style="margin-bottom: 1.5rem; color: #fa6f3d;"><i class="fas fa-list"></i> Daftar Pesanan</h3>
+      <div id="cart-list" class="card">
+        <p class="muted" style="text-align: center; padding: 2rem;">
+          <i class="fas fa-inbox" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i>
+          Keranjang masih kosong
+        </p>
+      </div>
+    </div>
+
+    <!-- Order Form -->
+    <div>
+      <h3 style="margin-bottom: 1.5rem; color: #fa6f3d;"><i class="fas fa-map-marker-alt"></i> Detail Pengiriman</h3>
+      <form id="order-form" class="card">
+        <label>
+          <i class="fas fa-user"></i> Nama Lengkap
+          <input type="text" name="name" placeholder="Masukkan nama Anda" required />
+        </label>
+        <label>
+          <i class="fas fa-home"></i> Alamat Pengiriman
+          <input type="text" name="address" placeholder="Jl. Contoh, No. 123, Kota..." required />
+        </label>
+        <label>
+          <i class="fas fa-sticky-note"></i> Catatan (Opsional)
+          <textarea name="note" placeholder="Contoh: Tanpa cabai, lebih pedas, dll..."></textarea>
+        </label>
+        <div class="form-actions">
+          <button type="reset" class="btn">
+            <i class="fas fa-redo"></i> Reset
+          </button>
+          <button type="submit" class="btn primary">
+            <i class="fas fa-check"></i> Lanjut Bayar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Pembayaran - Food Delivery{% endblock %}
+
+{% block content %}
+  <h2><i class="fas fa-credit-card"></i> Pembayaran</h2>
+  
+  <div style="max-width: 500px; margin: 0 auto;">
+    <div class="card" style="border-top: 4px solid #fa6f3d;">
+      <h3 style="color: #fa6f3d; margin-bottom: 1.5rem;">
+        <i class="fas fa-calculator"></i> Ringkasan Pembayaran
+      </h3>
+      <div style="padding: 1rem 0; border-bottom: 1px solid #f0f0f0;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem;">
+          <span>Subtotal Pesanan:</span>
+          <strong id="payment-subtotal" style="color: #fa6f3d;">Rp 0</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem;">
+          <span>Biaya Pengiriman:</span>
+          <strong>Rp 10.000</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem;">
+          <span>Diskon (jika ada):</span>
+          <strong id="payment-discount" style="color: #52c41a;">- Rp 0</strong>
+        </div>
+      </div>
+      <div style="padding: 1rem 0; display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 700;">
+        <span>Total:</span>
+        <span id="payment-total" style="color: #fa6f3d;">Rp 10.000</span>
+      </div>
+
+      <h3 style="color: #fa6f3d; margin-top: 2rem; margin-bottom: 1.5rem;">
+        <i class="fas fa-wallet"></i> Pilih Metode Pembayaran
+      </h3>
+      
+      <form id="payment-form">
+        <div style="margin-bottom: 1rem;">
+          <label style="display: flex; align-items: center; padding: 1rem; border: 2px solid #f0f0f0; border-radius: 8px; cursor: pointer; transition: all 0.3s; margin-bottom: 0;">
+            <input type="radio" name="method" value="cod" checked style="margin-right: 1rem; width: auto;" />
+            <div>
+              <strong><i class="fas fa-hand-holding-usd"></i> Bayar Nanti (COD)</strong>
+              <p style="margin: 0.3rem 0 0; color: #595959; font-size: 0.9rem;">Bayar langsung saat barang sampai</p>
+            </div>
+          </label>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <label style="display: flex; align-items: center; padding: 1rem; border: 2px solid #f0f0f0; border-radius: 8px; cursor: pointer; transition: all 0.3s; margin-bottom: 0;">
+            <input type="radio" name="method" value="transfer" style="margin-right: 1rem; width: auto;" />
+            <div>
+              <strong><i class="fas fa-university"></i> Transfer Bank</strong>
+              <p style="margin: 0.3rem 0 0; color: #595959; font-size: 0.9rem;">BCA, Mandiri, BNI, atau bank lokal lainnya</p>
+            </div>
+          </label>
+        </div>
+
+        <div style="margin-bottom: 2rem;">
+          <label style="display: flex; align-items: center; padding: 1rem; border: 2px solid #f0f0f0; border-radius: 8px; cursor: pointer; transition: all 0.3s; margin-bottom: 0;">
+            <input type="radio" name="method" value="e-wallet" style="margin-right: 1rem; width: auto;" />
+            <div>
+              <strong><i class="fas fa-mobile-alt"></i> E-Wallet</strong>
+              <p style="margin: 0.3rem 0 0; color: #595959; font-size: 0.9rem;">GCash, Dana, OVO, DANA, atau e-wallet lainnya</p>
+            </div>
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn primary" style="width: 100%;">
+            <i class="fas fa-check-circle"></i> Lanjutkan Pembayaran
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

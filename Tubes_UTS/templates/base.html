@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Food Delivery System - Pesan makanan favorit dari restoran terbaik" />
+    <title>{% block title %}Food Delivery{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <script defer src="{{ url_for('static', filename='app.js') }}"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-row">
+        <a class="brand" href="/">
+          <i class="fas fa-utensils"></i> FoodDelivery
+        </a>
+        <nav class="main-nav">
+          <a href="/" title="Beranda"><i class="fas fa-home"></i> Beranda</a>
+          <a href="/menu" title="Menu"><i class="fas fa-list"></i> Menu</a>
+          <a href="/order" title="Keranjang"><i class="fas fa-shopping-cart"></i> Pesanan</a>
+          <a href="/payment" title="Pembayaran"><i class="fas fa-credit-card"></i> Bayar</a>
+          <a href="/restoran" title="Restoran"><i class="fas fa-store"></i> Restoran</a>
+          <a href="/user" title="Profil"><i class="fas fa-user"></i> Profil</a>
+        </nav>
+        <div class="cart-mini" title="Jumlah item di keranjang">
+          <i class="fas fa-shopping-bag"></i> <span id="cart-count">0</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>
+          <i class="fas fa-heart" style="color: #fa6f3d;"></i>
+          &copy; UTS EAI - FoodDelivery
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

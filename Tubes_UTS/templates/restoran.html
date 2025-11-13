@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Restoran - Food Delivery{% endblock %}
+
+{% block content %}
+  <h2><i class="fas fa-store"></i> Restoran Mitra Kami</h2>
+  <p style="color: #595959; margin-bottom: 2rem;">Jelajahi restoran favorit dan temukan menu spesial mereka</p>
+  
+  <div class="restoran-list">
+    {% for r in restaurants|default([]) %}
+      <div class="card restoran-item">
+        <div style="background: linear-gradient(135deg, #fa6f3d 0%, #f05a24 100%); padding: 2rem 1rem; text-align: center; border-radius: 8px; margin-bottom: 1rem; color: white;">
+          <i class="fas fa-utensils" style="font-size: 2.5rem;"></i>
+        </div>
+        <h3>{{ r.name }}</h3>
+        <p style="display: flex; align-items: center; gap: 0.5rem; color: #595959;">
+          <i class="fas fa-map-marker-alt"></i> {{ r.address }}
+        </p>
+        <div style="display: flex; gap: 0.5rem; margin: 1rem 0; font-size: 0.9rem;">
+          <span style="background: #fff7e6; padding: 0.3rem 0.6rem; border-radius: 4px; color: #fa6f3d;">
+            <i class="fas fa-star"></i> 4.5
+          </span>
+          <span style="background: #f6ffed; padding: 0.3rem 0.6rem; border-radius: 4px; color: #52c41a;">
+            <i class="fas fa-clock"></i> 30-45 min
+          </span>
+        </div>
+        <a class="btn primary" href="/menu?restoran_id={{ r.id }}" style="display: block; text-align: center;">
+          <i class="fas fa-list"></i> Lihat Menu
+        </a>
+      </div>
+    {% else %}
+      <div style="grid-column: 1/-1; text-align: center; padding: 3rem 1rem;">
+        <i class="fas fa-inbox" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem; display: block;"></i>
+        <p style="color: #595959; font-size: 1.1rem;">Tidak ada restoran terdaftar saat ini.</p>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Profil - Food Delivery{% endblock %}
+
+{% block content %}
+  <h2><i class="fas fa-edit"></i> Edit Profil</h2>
+  <p style="color: #595959; margin-bottom: 2rem;">Perbarui data profil Anda</p>
+  
+  <div style="max-width: 500px; margin: 0 auto;">
+    <div class="card" style="border-top: 4px solid #fa6f3d;">
+      <form id="edit-profile-form">
+        <div style="margin-bottom: 1.5rem;">
+          <label for="name" style="display: block; color: #595959; font-size: 0.9rem; margin-bottom: 0.5rem;">
+            <i class="fas fa-user"></i> Nama Lengkap
+          </label>
+          <input 
+            type="text" 
+            id="name" 
+            name="name" 
+            value="{{ user.name if user is defined else '' }}"
+            placeholder="Masukkan nama lengkap Anda"
+            required
+            style="width: 100%; padding: 0.8rem; border: 2px solid #f0f0f0; border-radius: 6px; font-size: 1rem; box-sizing: border-box;"
+          />
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+          <label for="email" style="display: block; color: #595959; font-size: 0.9rem; margin-bottom: 0.5rem;">
+            <i class="fas fa-envelope"></i> Email
+          </label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            value="{{ user.email if user is defined else '' }}"
+            placeholder="Masukkan email Anda"
+            required
+            style="width: 100%; padding: 0.8rem; border: 2px solid #f0f0f0; border-radius: 6px; font-size: 1rem; box-sizing: border-box;"
+          />
+        </div>
+
+        <div style="margin-bottom: 2rem;">
+          <label for="phone" style="display: block; color: #595959; font-size: 0.9rem; margin-bottom: 0.5rem;">
+            <i class="fas fa-phone"></i> Nomor Telepon
+          </label>
+          <input 
+            type="tel" 
+            id="phone" 
+            name="phone" 
+            value="{{ user.phone if user is defined else '' }}"
+            placeholder="Masukkan nomor telepon Anda"
+            style="width: 100%; padding: 0.8rem; border: 2px solid #f0f0f0; border-radius: 6px; font-size: 1rem; box-sizing: border-box;"
+          />
+        </div>
+
+        <div style="display: flex; gap: 1rem;">
+          <button type="reset" class="btn" style="flex: 1; text-align: center;">
+            <i class="fas fa-redo"></i> Reset
+          </button>
+          <button type="submit" class="btn primary" style="flex: 1; text-align: center;">
+            <i class="fas fa-save"></i> Simpan Perubahan
+          </button>
+        </div>
+
+        <div style="text-align: center; margin-top: 1rem;">
+          <a href="/user" style="color: #fa6f3d; text-decoration: none; font-size: 0.9rem;">
+            <i class="fas fa-arrow-left"></i> Kembali ke Profil
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('edit-profile-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value
+      };
+
+      fetch('/user/edit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'ok') {
+          alert('Profil berhasil diperbarui!');
+          window.location.href = '/user';
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Terjadi kesalahan saat menyimpan profil');
+      });
+    });
+  </script>
+{% endblock %}
